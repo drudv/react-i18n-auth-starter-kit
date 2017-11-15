@@ -14,14 +14,13 @@ module.exports = {
   module: {
 
     // apply loaders to files that meet given conditions
-    loaders: [{
-      test: /\.js$/,
-      include: path.join(__dirname, '/client/src'),
-      loader: 'babel',
-      query: {
-        presets: ["react", "es2015"]
-      }
-    }],
+    rules: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        include: path.join(__dirname, '/client/src'),
+      },
+    ],
   },
 
   // start Webpack in a watch mode, so Webpack will rebuild the bundle on changes
