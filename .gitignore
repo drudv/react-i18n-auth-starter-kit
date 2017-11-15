@@ -1,0 +1,6 @@
+node_modules
+*.log
+config.js
+client/dist
+package-lock.js
+*~
