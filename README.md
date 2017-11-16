@@ -1,4 +1,4 @@
-# React starter kit with JWT auth, i18n and ORM (WiP)
+# React Full-Stack Starter Kit with JWT Auth, Internationalization and ORM (WiP)
 
 # WiP
 
@@ -14,7 +14,7 @@ It's in progress and not yet ready for use.
 
 * [Sequelize](https://github.com/sequelize/sequelize) to access ORM (currently only MySQL is supported)
 
-* Internationalization – TBD
+* [react-i18next](https://github.com/i18next/react-i18next) – Internationalization
 
 ## References
 
