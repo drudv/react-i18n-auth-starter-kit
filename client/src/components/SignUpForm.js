@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
-import { Card, CardText } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import Card from '@material-ui/core/Card';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 const SignUpForm = ({
   onSubmit,
@@ -19,9 +19,9 @@ const SignUpForm = ({
 
       <div className="field-line">
         <TextField
-          floatingLabelText="Name"
+          label="Name"
           name="name"
-          errorText={errors.name}
+          error={errors.name != null}
           onChange={onChange}
           value={user.name}
         />
@@ -29,9 +29,9 @@ const SignUpForm = ({
 
       <div className="field-line">
         <TextField
-          floatingLabelText="Email"
+          label="Email"
           name="email"
-          errorText={errors.email}
+          error={errors.email != null}
           onChange={onChange}
           value={user.email}
         />
@@ -39,20 +39,22 @@ const SignUpForm = ({
 
       <div className="field-line">
         <TextField
-          floatingLabelText="Password"
+          label="Password"
           type="password"
           name="password"
           onChange={onChange}
-          errorText={errors.password}
+          error={errors.password != null}
           value={user.password}
         />
       </div>
 
       <div className="button-line">
-        <RaisedButton type="submit" label="Create New Account" primary />
+        <Button variant="raised" type="submit" color="primary">
+          Create New Account
+        </Button>
       </div>
 
-      <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
+      Already have an account? <Link to={'/login'}>Log in</Link>
     </form>
   </Card>
 );

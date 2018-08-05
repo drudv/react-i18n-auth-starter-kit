@@ -4,6 +4,14 @@
 
 It's in progress and not yet ready for use.
 
+# Install
+
+```
+$ npm install
+
+$ npm run setup # create config and install DB
+```
+
 ## Tooling
 
 * [React](https://github.com/facebook/react)

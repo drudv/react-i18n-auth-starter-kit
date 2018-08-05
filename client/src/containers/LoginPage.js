@@ -1,7 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Auth from '../modules/Auth';
 import LoginForm from '../components/LoginForm';
-
+import Page from '../components/Page';
 
 class LoginPage extends React.Component {
 
@@ -21,6 +23,7 @@ class LoginPage extends React.Component {
 
     // set the initial component state
     this.state = {
+      done: false,
       errors: {},
       successMessage,
       user: {
@@ -55,25 +58,17 @@ class LoginPage extends React.Component {
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
         // success
+        Auth.authenticateUser(xhr.response.token);
 
         // change the component-container state
         this.setState({
-          errors: {}
+          errors: {},
+          done: true
         });
-
-        // save the token
-        Auth.authenticateUser(xhr.response.token);
-
-
-        // change the current URL to /
-        this.context.router.replace('/');
       } else {
         // failure
-
-        // change the component state
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;
-
         this.setState({
           errors
         });
@@ -89,26 +84,33 @@ class LoginPage extends React.Component {
    */
   changeUser(event) {
     const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
+    const value = event.target.value;
 
-    this.setState({
-      user
-    });
+    this.setState(state => ({
+      user: {
+        ...state.user,
+        [field]: value,
+      }
+    }));
   }
 
   /**
    * Render the component.
    */
   render() {
+    if (this.state.done) {
+      return <Redirect to="/dashboard" />;
+    }
     return (
-      <LoginForm
-        onSubmit={this.processForm}
-        onChange={this.changeUser}
-        errors={this.state.errors}
-        successMessage={this.state.successMessage}
-        user={this.state.user}
-      />
+      <Page access="public">
+        <LoginForm
+          onSubmit={this.processForm}
+          onChange={this.changeUser}
+          errors={this.state.errors}
+          successMessage={this.state.successMessage}
+          user={this.state.user}
+        />
+      </Page>
     );
   }
 

@@ -1,6 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import SignUpForm from '../components/SignUpForm';
-
+import Page from '../components/Page';
 
 class SignUpPage extends React.Component {
 
@@ -12,6 +14,7 @@ class SignUpPage extends React.Component {
 
     // set the initial component state
     this.state = {
+      done: false,
       errors: {},
       user: {
         email: '',
@@ -47,20 +50,13 @@ class SignUpPage extends React.Component {
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
         // success
-
-        // change the component-container state
+        localStorage.setItem('successMessage', xhr.response.message);
         this.setState({
+          done: true,
           errors: {}
         });
-
-        // set a message
-        localStorage.setItem('successMessage', xhr.response.message);
-
-        // make a redirect
-        this.context.router.replace('/login');
       } else {
         // failure
-
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;
 
@@ -82,29 +78,28 @@ class SignUpPage extends React.Component {
     const user = this.state.user;
     user[field] = event.target.value;
 
-    this.setState({
-      user
-    });
+    this.setState({user});
   }
 
   /**
    * Render the component.
    */
   render() {
+    if (this.state.done) {
+      return <Redirect to="/login" />;
+    }
     return (
-      <SignUpForm
-        onSubmit={this.processForm}
-        onChange={this.changeUser}
-        errors={this.state.errors}
-        user={this.state.user}
-      />
+      <Page access="public">
+        <SignUpForm
+          onSubmit={this.processForm}
+          onChange={this.changeUser}
+          errors={this.state.errors}
+          user={this.state.user}
+        />
+      </Page>
     );
   }
 
 }
-
-SignUpPage.contextTypes = {
-  router: PropTypes.object.isRequired
-};
 
 export default SignUpPage;
