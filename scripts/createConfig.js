@@ -16,11 +16,11 @@ process.on('unhandledRejection', function (exception) {
 const schema = {
   properties: {
     dbName: {
-      description: 'DB name',
+      description: 'DB name (existing)',
       required: true,
     },
     dbUser: {
-      description: 'DB user',
+      description: 'DB user (existing)',
       required: true,
     },
     dbPassword: {
