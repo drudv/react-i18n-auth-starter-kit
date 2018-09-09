@@ -90,6 +90,7 @@ class SignUpPage extends React.Component {
     }
     return (
       <Page access="public">
+        <h1>Sign Up</h1>
         <SignUpForm
           onSubmit={this.processForm}
           onChange={this.changeUser}

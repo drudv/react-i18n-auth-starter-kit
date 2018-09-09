@@ -24,6 +24,8 @@ $ npm run setup # create config and install DB
 
 * [react-i18next](https://github.com/i18next/react-i18next) – Internationalization
 
+* [ant-design](https://github.com/ant-design/ant-design) - UI library
+
 ## References
 
 This project was inspired by and based on [vladimirponomarev/authentication-in-react-apps](https://github.com/vladimirponomarev/authentication-in-react-apps) code

@@ -1,11 +1,9 @@
 import React from 'react';
 import Auth from '../modules/Auth';
-import Dashboard from '../components/Dashboard';
 import Page from '../components/Page';
-
+import { I18n } from 'react-i18next';
 
 class DashboardPage extends React.Component {
-
   /**
    * Class constructor.
    */
@@ -13,7 +11,7 @@ class DashboardPage extends React.Component {
     super(props);
 
     this.state = {
-      secretData: ''
+      secretData: '',
     };
   }
 
@@ -30,7 +28,7 @@ class DashboardPage extends React.Component {
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
         this.setState({
-          secretData: xhr.response.message
+          secretData: xhr.response.message,
         });
       }
     });
@@ -42,12 +40,17 @@ class DashboardPage extends React.Component {
    */
   render() {
     return (
-      <Page>
-        <Dashboard secretData={this.state.secretData} />
-      </Page>
+      <I18n>
+        {(t, { i18n }) => (
+          <Page selectedMenuItem="dashboard">
+            <h1>{t('dashboard')}</h1>
+            <p>This is page is visible only for authenticated users.</p>
+            <p>Secret data: {this.state.secretData}</p>
+          </Page>
+        )}
+      </I18n>
     );
   }
-
 }
 
 export default DashboardPage;

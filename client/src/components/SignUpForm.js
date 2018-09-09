@@ -1,70 +1,90 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import { Form, Icon, Input, Button, Checkbox, Alert } from 'antd';
 
-const SignUpForm = ({
-  onSubmit,
-  onChange,
-  errors,
-  user,
-}) => (
-  <Card className="container">
-    <form action="/" onSubmit={onSubmit}>
-      <h2 className="card-heading">Sign Up</h2>
-
-      {errors.summary && <p className="error-message">{errors.summary}</p>}
-
-      <div className="field-line">
-        <TextField
-          label="Name"
+const SignUpForm = ({ form, onSubmit, onChange, errors, user }) => (
+  <Form action="/" onSubmit={onSubmit}>
+    {errors.summary && (
+      <Form.Item>
+        <Alert message={errors.summary} type="error" />
+      </Form.Item>
+    )}
+    <Form.Item
+      label="Name"
+      validateStatus={errors.name != null ? 'error' : null}
+      help={errors.name}
+    >
+      {form.getFieldDecorator('name', {
+        rules: [
+          { required: true, message: 'Please input your name!' },
+        ],
+        initialValue: user.name,
+      })(
+        <Input
           name="name"
-          error={errors.name != null}
+          placeholder="Name"
           onChange={onChange}
-          value={user.name}
         />
-      </div>
+      )}
+    </Form.Item>
 
-      <div className="field-line">
-        <TextField
-          label="Email"
+    <Form.Item
+      label="E-mail"
+      validateStatus={errors.email != null ? 'error' : null}
+      help={errors.email}
+    >
+      {form.getFieldDecorator('email', {
+        rules: [
+          { required: true, message: 'Please input your email!' },
+        ],
+        initialValue: user.email,
+      })(
+        <Input
           name="email"
-          error={errors.email != null}
+          placeholder="E-mail"
           onChange={onChange}
-          value={user.email}
         />
-      </div>
+      )}
+    </Form.Item>
 
-      <div className="field-line">
-        <TextField
-          label="Password"
-          type="password"
+    <Form.Item
+      label="Password"
+      validateStatus={errors.password != null ? 'error' : null}
+      help={errors.password}
+    >
+      {form.getFieldDecorator('password', {
+        rules: [
+          { required: true, message: 'Please input your email!' },
+        ],
+        initialValue: user.password,
+      })(
+        <Input
           name="password"
+          type="password"
+          placeholder="Password"
           onChange={onChange}
-          error={errors.password != null}
-          value={user.password}
         />
-      </div>
+      )}
+    </Form.Item>
 
-      <div className="button-line">
-        <Button variant="raised" type="submit" color="primary">
-          Create New Account
-        </Button>
-      </div>
+    <Form.Item>
+      <Button type="primary" htmlType="submit">
+        Create New Account
+      </Button>
 
-      Already have an account? <Link to={'/login'}>Log in</Link>
-    </form>
-  </Card>
+      <p>Already have an account? <Link to={'/login'}>Log in</Link></p>
+    </Form.Item>
+  </Form>
 );
 
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 };
 
-export default SignUpForm;
+const WrappedSignUpForm = Form.create()(SignUpForm);
 
+export default WrappedSignUpForm;

@@ -103,6 +103,7 @@ class LoginPage extends React.Component {
     }
     return (
       <Page access="public">
+        <h1>Login</h1>
         <LoginForm
           onSubmit={this.processForm}
           onChange={this.changeUser}

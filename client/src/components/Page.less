@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+
+  .header__logo {
+    margin-right: 20px;
+  }
+
+  .header__menu {
+    flex-grow: 1;
+  }
+
+  .header__right {
+    display: flex;
+    align-items: center;
+  }
+
+  .header__user-actions {
+    margin-left: 10px;
+
+    > * {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+}
+
+.content {
+  padding: 10px 24px;
+  min-height: 280px;
+}
