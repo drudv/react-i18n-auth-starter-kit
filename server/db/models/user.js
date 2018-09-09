@@ -11,6 +11,10 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         autoIncrement: true,
       },
+      active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -22,6 +26,11 @@ module.exports = function (sequelize, DataTypes) {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      lang: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'en'
       }
     },
     {
