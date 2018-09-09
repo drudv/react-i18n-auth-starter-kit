@@ -12,16 +12,7 @@ const db = {
   }),
   models: {},
 };
-
-const modelsDir = path.join(__dirname, 'models');
-
-fs
-  .readdirSync(modelsDir)
-  .filter(file => !['.', '..', 'index.js'].includes(file))
-  .forEach((file) => {
-    const model = db.sequelize.import(path.join(modelsDir, file));
-    db.models[model.name] = model;
-  });
+db.models = require('./models.js')(db.sequelize);
 
 Object.keys(db.models)
   .forEach((modelName) => {
