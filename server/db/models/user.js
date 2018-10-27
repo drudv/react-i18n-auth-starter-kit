@@ -1,7 +1,6 @@
-const sequelize = require('sequelize');
-const InternalServerError = require('../../errors/InternalServerError');
+const {DEFAULT_MODEL_OPTIONS} = require('../common');
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
@@ -25,12 +24,9 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     {
-      timestamps: false,
-      freezeTableName: true,
+      ...DEFAULT_MODEL_OPTIONS,
       tableName: 'user',
-      underscored: true,
     },
   );
-
   return User;
 };
