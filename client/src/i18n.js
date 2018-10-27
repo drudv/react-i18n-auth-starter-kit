@@ -14,6 +14,7 @@ i18n
     },
 
     fallbackLng: 'en',
+    whitelist: ['en', 'cz'],
 
     // have a common namespace used around the full app
     ns: ['translations'],
@@ -27,8 +28,7 @@ i18n
 
     react: {
       wait: true,
-    }
+    },
   });
-
 
 export default i18n;
