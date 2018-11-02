@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const {DEFAULT_MODEL_OPTIONS} = require('../common');
+const {TOKEN_TYPE_ACTIVATE_USER} = require('../../constants');
 
 module.exports = (sequelize, DataTypes) => {
   const Token = sequelize.define(
@@ -20,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: 'uniqueToken',
       },
+      tokenType: {
+        type: DataTypes.ENUM(TOKEN_TYPE_ACTIVATE_USER)
+      }
     },
     {
       ...DEFAULT_MODEL_OPTIONS,

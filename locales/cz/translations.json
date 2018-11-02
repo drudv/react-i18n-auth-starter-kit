@@ -2,5 +2,6 @@
   "dashboard": "Nástěnka",
   "log-in": "Přihlášení",
   "log-out": "Odhlásit se",
-  "sign-up": "Vytvořit účet"
+  "sign-up": "Vytvořit účet",
+  "confirm-mail": "Potvrďte svůj e-mail: {{link}}"
 }

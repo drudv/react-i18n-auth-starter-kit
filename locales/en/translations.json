@@ -2,5 +2,6 @@
   "dashboard": "Dashboard",
   "log-in": "Log In",
   "log-out": "Log Out",
-  "sign-up": "Sing Up"
+  "sign-up": "Sing Up",
+  "confirm-mail": "Confirm your email: {{link}}"
 }

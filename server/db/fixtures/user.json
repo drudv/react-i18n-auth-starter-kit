@@ -5,7 +5,8 @@
       "id": 1,
       "email": "test@test",
       "password": "$2b$10$brSnE2te1.DuOeH8126VgeUDcMRbiB6uiJi5sHW8lQK8G76wraUNm",
-      "name": "test"
+      "name": "test",
+      "active": false
     }
   }
 ]

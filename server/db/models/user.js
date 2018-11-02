@@ -1,4 +1,4 @@
-const {DEFAULT_MODEL_OPTIONS} = require('../common');
+const { DEFAULT_MODEL_OPTIONS } = require('../common');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -18,15 +18,20 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING,
       },
+      active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-      }
+      },
     },
     {
       ...DEFAULT_MODEL_OPTIONS,
       tableName: 'user',
-    },
+    }
   );
   return User;
 };
