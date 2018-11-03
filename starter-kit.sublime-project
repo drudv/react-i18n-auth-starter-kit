@@ -1,0 +1,12 @@
+{
+  "settings": {
+    "tab_size": 2,
+    "translate_tabs_to_spaces": true,
+    "detect_indentation": false
+  },
+  "folders": [
+    {
+      "path": "."
+    }
+  ]
+}
