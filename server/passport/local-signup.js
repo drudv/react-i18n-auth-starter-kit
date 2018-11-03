@@ -20,7 +20,7 @@ module.exports = new PassportLocalStrategy(
     hashPassword(password)
       .then(hash => {
         const userData = {
-          email,
+          email: email.toLowerCase(),
           password: hash,
           name: req.body.name,
           active: false,
@@ -33,10 +33,13 @@ module.exports = new PassportLocalStrategy(
                 userId: user.id,
                 tokenType: TOKEN_TYPE_ACTIVATE_USER,
               };
-              return Token.create(tokenData, { transaction });
+              return Promise.all([
+                user,
+                Token.create(tokenData, { transaction })
+              ]);
             })
-            .then(() => {
-              done(null);
+            .then(([user, token]) => {
+              done(null, { ...user, token: token.token });
             });
         });
       })

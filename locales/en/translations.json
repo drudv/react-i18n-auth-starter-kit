@@ -1,4 +1,6 @@
 {
+  "activate-account": "Activate Your Account",
+  "activation-mail-text": "Hello <%= name %>,\nplease verify your email address by clicking on this link:\n<%= link %>",
   "dashboard": "Dashboard",
   "log-in": "Log In",
   "log-out": "Log Out",

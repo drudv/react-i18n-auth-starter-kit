@@ -1,7 +1,8 @@
 {
+  "activate-account": "Aktivujte svůj účet",
+  "activation-mail-text": "Ahoj <%= name %>,\nověřte svou e-mailovou adresu kliknutím na tento odkaz:\n<%= link %>",
   "dashboard": "Nástěnka",
   "log-in": "Přihlášení",
   "log-out": "Odhlásit se",
-  "sign-up": "Vytvořit účet",
-  "confirm-mail": "Potvrďte svůj e-mail: {{link}}"
+  "sign-up": "Vytvořit účet"
 }
