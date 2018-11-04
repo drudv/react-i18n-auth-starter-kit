@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Token.associate = ({User, Token}) => {
-    User.hasMany(Token, {foreignKey: 'userId', sourceKey: 'id'});
+    User.hasMany(Token, {foreignKey: 'userId', sourceKey: 'id', as: 'tokens'});
     Token.belongsTo(User, {foreignKey: 'userId', targetKey: 'id'});
   };
   return Token;

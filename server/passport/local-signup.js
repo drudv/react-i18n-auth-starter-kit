@@ -35,11 +35,11 @@ module.exports = new PassportLocalStrategy(
               };
               return Promise.all([
                 user,
-                Token.create(tokenData, { transaction })
+                Token.create(tokenData, { transaction }),
               ]);
             })
             .then(([user, token]) => {
-              done(null, { ...user, token: token.token });
+              done(null, { user: user.dataValues, token: token.token });
             });
         });
       })

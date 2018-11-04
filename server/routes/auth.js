@@ -1,11 +1,18 @@
-const { template } = require('lodash');
+const { template, get } = require('lodash');
 const express = require('express');
+const url = require('url');
 const validator = require('validator');
 const passport = require('passport');
 
 const translate = require('../utils/translate');
 const sendMail = require('../utils/sendMail');
+const errorToText = require('../utils/errorToText');
 const config = require('../../config');
+
+const db = require('../db');
+const { TOKEN_TYPE_ACTIVATE_USER } = require('../constants');
+const User = db.models.User;
+const Token = db.models.Token;
 
 const router = new express.Router();
 
@@ -111,7 +118,7 @@ router.post('/signup', (req, res, next) => {
     });
   }
 
-  return passport.authenticate('local-signup', (err, user) => {
+  return passport.authenticate('local-signup', (err, { user, token }) => {
     if (err) {
       if (err.code === 'ER_DUP_ENTRY') {
         // the 409 HTTP status code is for conflict error
@@ -130,6 +137,7 @@ router.post('/signup', (req, res, next) => {
       });
     }
 
+    // don't block the response, send the confirmail email in parallel
     sendMail({
       serverHost: config.mailServerHost,
       serverPort: config.mailServerPort,
@@ -144,17 +152,11 @@ router.post('/signup', (req, res, next) => {
         email: user.email,
         link: `${req.protocol}://${req.get(
           'host'
-        )}/activate?token=${encodeURIComponent(user.token)}`,
+        )}/auth/confirm-email?token=${encodeURIComponent(token)}`,
       }),
     }).catch(error => {
       console.error(error);
     });
-    console.log(
-      'link:',
-      `${req.protocol}://${req.get('host')}/activate?token=${encodeURIComponent(
-        user.token
-      )}`
-    );
 
     return res.status(200).json({
       success: true,
@@ -196,6 +198,46 @@ router.post('/login', (req, res, next) => {
       user: userData,
     });
   })(req, res, next);
+});
+
+router.get('/confirm-email', (req, res, next) => {
+  const urlParts = url.parse(req.url, true);
+  const token = get(urlParts.query, 'token');
+  return db.sequelize
+    .transaction(transaction => {
+      return User.findOne(
+        {
+          where: {
+            '$tokens.token$': token,
+            '$tokens.tokenType$': TOKEN_TYPE_ACTIVATE_USER,
+          },
+          include: [
+            {
+              model: Token,
+              as: 'tokens',
+            },
+          ],
+        },
+        { transaction }
+      ).then(user => {
+        return Promise.all([
+          user.updateAttributes({ active: true }, { transaction }),
+          Token.destroy({ where: { token } }),
+        ]);
+      });
+    })
+    .then(([user, _]) => {
+      return res.status(200).json({
+        success: true,
+        message: `User '${user.dataValues.email}' has been activated`,
+      });
+    })
+    .catch(error => {
+      return res.status(400).json({
+        success: false,
+        message: errorToText(error),
+      });
+    });
 });
 
 module.exports = router;
